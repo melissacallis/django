@@ -1,0 +1,36 @@
+{% extends 'recipelist/layout.html' %}
+
+{% block content %}
+
+
+
+
+  <h1>1. Grocery List</h1>
+  <ul>
+    {% for ingredient in selected_ingredients %}
+      <li>{{ ingredient }}</li>
+    {% endfor %}
+  </ul>
+
+  <h1>2. Login to your store</h1>
+  {% if error_message %}
+  <div class="alert alert-danger" role="alert">
+      {{ error_message }}
+  </div>
+  {% endif %}
+  <form method="post" action="{% url 'recipelist:login_heb' %}">
+    {% csrf_token %}
+    <div class="form-group">
+      <label for="email">Email</label>
+      <input type="email" class="form-control" id="email" name="email" required>
+    </div>
+    <div class="form-group">
+      <label for="password">Password</label>
+      <input type="password" class="form-control" id="password" name="password" required>
+    </div>
+    <button type="submit" class="btn btn-primary">Login</button>
+  </form>
+
+{% endblock %}
+
+
