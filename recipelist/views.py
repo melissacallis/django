@@ -1,18 +1,6 @@
-import os
-import shutil
-import traceback
-
 import requests
 
 from django.shortcuts import render
-from django.http import HttpResponse
-
-from selenium import webdriver
-from selenium.webdriver.chrome.options import Options
-from selenium.webdriver.chrome.service import Service
-from selenium.webdriver.common.by import By
-from selenium.webdriver.support.ui import WebDriverWait
-from selenium.webdriver.support import expected_conditions as EC
 
 
 MEALDB_SEARCH_URL = "https://www.themealdb.com/api/json/v1/1/search.php"
@@ -73,56 +61,3 @@ def grocery_list(request):
         context = {'selected_ingredients': selected_ingredients}
         return render(request, 'recipelist/grocery_list.html', context)
     return render(request, 'recipelist/grocery_list.html')
-
-
-def login_heb(request):
-    if request.method != 'POST':
-        return HttpResponse("Invalid request method.")
-
-    email = request.POST['email']
-    password = request.POST['password']
-
-    url = "https://accounts.heb.com/interaction/gAB3qIjVSAmZeiNryFlSRw/login"
-
-    chrome_options = Options()
-    chrome_options.add_argument("--headless=new")
-    chrome_options.add_argument("--no-sandbox")
-    chrome_options.add_argument("--disable-dev-shm-usage")
-    chrome_options.add_argument("--disable-gpu")
-    chrome_options.add_argument("--window-size=1280,800")
-
-    # The heroku-community/chrome-for-testing buildpack puts `chrome` and
-    # `chromedriver` on PATH rather than setting env vars, so resolve them
-    # there; GOOGLE_CHROME_BIN/CHROMEDRIVER_PATH are kept as overrides in
-    # case a different buildpack (or local dev) sets them instead.
-    chrome_bin = os.environ.get('GOOGLE_CHROME_BIN') or shutil.which('chrome') or shutil.which('google-chrome')
-    if chrome_bin:
-        chrome_options.binary_location = chrome_bin
-
-    chromedriver_path = os.environ.get('CHROMEDRIVER_PATH') or shutil.which('chromedriver')
-    service = Service(executable_path=chromedriver_path) if chromedriver_path else Service()
-
-    driver = webdriver.Chrome(service=service, options=chrome_options)
-
-    try:
-        driver.get(url)
-
-        wait = WebDriverWait(driver, 20)
-        email_input = wait.until(EC.visibility_of_element_located((By.ID, "email")))
-        password_input = wait.until(EC.presence_of_element_located((By.ID, "password")))
-        submit_button = wait.until(EC.element_to_be_clickable((By.ID, "submit-button")))
-
-        email_input.send_keys(email)
-        password_input.send_keys(password)
-        submit_button.click()
-
-        wait.until(EC.title_contains("Logged in"))
-
-        return HttpResponse("Login completed successfully.")
-
-    except Exception as e:
-        traceback.print_exc()
-        return HttpResponse(f"Error occurred during login: {type(e).__name__}")
-
-    finally:
-        driver.quit()

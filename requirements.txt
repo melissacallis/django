@@ -2,4 +2,3 @@ Django==4.2.5
 requests==2.31.0
 gunicorn==21.2.0
 whitenoise==6.5.0
-selenium==4.15.2

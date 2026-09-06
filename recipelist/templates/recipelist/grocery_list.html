@@ -18,30 +18,14 @@
   </div>
 
   <div class="card p-4">
-    <h1>2. Login to Your Store</h1>
+    <h1>2. Shop at H-E-B</h1>
     <p class="text-muted small">
-      Demo feature: this drives a headless browser that types your email/password into H-E-B's own login
-      page on the server. H-E-B's login is protected by bot-detection that currently blocks this kind of
-      automation, so this will reliably show an error below rather than log in &mdash; it's kept here as a
-      demonstration of the approach, not a working integration. Please don't enter a real password here.
+      H-E-B's login page blocks being embedded or automated (standard anti-phishing protection), so this
+      opens it directly in a new tab &mdash; your email/password go straight to H-E-B, never through this app.
     </p>
-    {% if error_message %}
-    <div class="alert alert-danger" role="alert">
-        {{ error_message }}
-    </div>
-    {% endif %}
-    <form method="post" action="{% url 'recipelist:login_heb' %}">
-      {% csrf_token %}
-      <div class="mb-3">
-        <label for="email" class="form-label">Email</label>
-        <input type="email" class="form-control" id="email" name="email" required>
-      </div>
-      <div class="mb-3">
-        <label for="password" class="form-label">Password</label>
-        <input type="password" class="form-control" id="password" name="password" required>
-      </div>
-      <button type="submit" class="btn btn-primary">Login</button>
-    </form>
+    <a href="https://www.heb.com/login" target="_blank" rel="noopener" class="btn btn-primary">
+      Open H-E-B to Log In
+    </a>
   </div>
 
 {% endblock %}
