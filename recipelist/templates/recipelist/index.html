@@ -1,19 +1,17 @@
 {% extends 'recipelist/layout.html' %}
 
-{% block title %}Welcome{% endblock %}
+{% block title %}Recipe Search{% endblock %}
 
-<!DOCTYPE html>
-
-    {% block content %}
-    <title>Get Ingredients</title>
-  </head>
-  <body>
-
-    <h1>Get Ingredients</h1>
-    <form method="post" action="{% url 'recipelist:get_ingredients' %}">
-      {% csrf_token %}
-      <label for="url">Enter the URL of an Allrecipes.com recipe:</label><br>
-      <input type="text" id="url" name="url"><br><br>
-      <input type="submit" value="Submit">
+{% block content %}
+  <div class="card p-4">
+    <h1>Search for a Recipe</h1>
+    <p class="text-muted">Search by dish name to pull its ingredients and directions.</p>
+    <form action="{% url 'recipelist:search' %}" method="get">
+      <div class="mb-3">
+        <label for="q" class="form-label">Recipe name</label>
+        <input type="search" class="form-control" id="q" name="q" placeholder="e.g. chicken curry" required>
+      </div>
+      <button type="submit" class="btn btn-primary">Search</button>
     </form>
-    {% endblock %}
+  </div>
+{% endblock %}
