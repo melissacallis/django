@@ -21,8 +21,9 @@
     <h1>2. Login to Your Store</h1>
     <p class="text-muted small">
       Demo feature: this drives a headless browser that types your email/password into H-E-B's own login
-      page on the server. It's a CS50 project shown for portfolio purposes &mdash; please don't enter a
-      real password here.
+      page on the server. H-E-B's login is protected by bot-detection that currently blocks this kind of
+      automation, so this will reliably show an error below rather than log in &mdash; it's kept here as a
+      demonstration of the approach, not a working integration. Please don't enter a real password here.
     </p>
     {% if error_message %}
     <div class="alert alert-danger" role="alert">

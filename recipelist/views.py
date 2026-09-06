@@ -1,4 +1,5 @@
 import os
+import shutil
 import traceback
 
 import requests
@@ -90,11 +91,15 @@ def login_heb(request):
     chrome_options.add_argument("--disable-gpu")
     chrome_options.add_argument("--window-size=1280,800")
 
-    chrome_bin = os.environ.get('GOOGLE_CHROME_BIN')
+    # The heroku-community/chrome-for-testing buildpack puts `chrome` and
+    # `chromedriver` on PATH rather than setting env vars, so resolve them
+    # there; GOOGLE_CHROME_BIN/CHROMEDRIVER_PATH are kept as overrides in
+    # case a different buildpack (or local dev) sets them instead.
+    chrome_bin = os.environ.get('GOOGLE_CHROME_BIN') or shutil.which('chrome') or shutil.which('google-chrome')
     if chrome_bin:
         chrome_options.binary_location = chrome_bin
 
-    chromedriver_path = os.environ.get('CHROMEDRIVER_PATH')
+    chromedriver_path = os.environ.get('CHROMEDRIVER_PATH') or shutil.which('chromedriver')
     service = Service(executable_path=chromedriver_path) if chromedriver_path else Service()
 
     driver = webdriver.Chrome(service=service, options=chrome_options)
