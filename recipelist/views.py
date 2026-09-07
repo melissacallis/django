@@ -7,6 +7,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.views.decorators.http import require_POST
 
 from .models import Favorite
+from .flavor import chef_intro
 
 SPOONACULAR_API_KEY = os.environ.get('SPOONACULAR_API_KEY', '')
 SPOONACULAR_BASE = "https://api.spoonacular.com/recipes"
@@ -57,6 +58,9 @@ def fetch_recipe(query):
         'source_url': data.get('sourceUrl'),
         'ingredients': ingredients,
         'directions': directions,
+        'ready_in_minutes': data.get('readyInMinutes'),
+        'servings': data.get('servings'),
+        'cuisines': data.get('cuisines') or [],
     }
 
 
@@ -78,6 +82,9 @@ def search(request):
     recipe['is_favorite'] = Favorite.objects.filter(external_id=recipe['external_id']).exists()
     recipe['ingredients_json'] = json.dumps(recipe['ingredients'])
     recipe['directions_json'] = json.dumps(recipe['directions'])
+    recipe['chef_intro'] = chef_intro(
+        recipe['title'], recipe['ingredients'], recipe['cuisines'], recipe['external_id']
+    )
     return render(request, 'recipelist/ingredients.html', recipe)
 
 

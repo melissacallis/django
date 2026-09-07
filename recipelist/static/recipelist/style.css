@@ -73,3 +73,85 @@ a:hover {
   padding: 2rem 0;
 }
 
+/* ===== Recipe page — Foodista-style editorial layout ===== */
+.recipe-title {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-weight: 700;
+}
+
+.recipe-hero {
+  position: relative;
+  border-radius: 1rem;
+  overflow: hidden;
+  margin-bottom: 1.5rem;
+  box-shadow: 0 8px 28px rgba(20, 20, 43, 0.12);
+}
+.recipe-hero img {
+  width: 100%;
+  height: 340px;
+  object-fit: cover;
+  display: block;
+}
+
+.chef-intro {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-style: italic;
+  font-size: 1.2rem;
+  line-height: 1.6;
+  color: var(--ink);
+  border-left: 3px solid var(--accent);
+  padding-left: 1.25rem;
+  margin: 1.25rem 0 1.5rem;
+}
+
+.recipe-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+.recipe-meta .badge {
+  background: #eeeafc;
+  color: var(--accent-dark);
+  font-weight: 600;
+  font-size: 0.85rem;
+  padding: 0.45rem 0.8rem;
+  border-radius: 50rem;
+}
+
+.recipe-section-title {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-weight: 700;
+  border-bottom: 2px solid #eeeafc;
+  padding-bottom: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.direction-steps {
+  list-style: none;
+  padding-left: 0;
+  counter-reset: step;
+}
+.direction-steps li {
+  counter-increment: step;
+  position: relative;
+  padding-left: 2.75rem;
+  margin-bottom: 1.1rem;
+}
+.direction-steps li::before {
+  content: counter(step);
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 2rem;
+  height: 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--accent);
+  color: #fff;
+  border-radius: 50%;
+  font-weight: 700;
+  font-size: 0.9rem;
+}
+
