@@ -73,15 +73,3 @@ a:hover {
   padding: 2rem 0;
 }
 
-.btn-favorite {
-  border: none;
-  background: transparent;
-  font-size: 1.5rem;
-  line-height: 1;
-  padding: 0;
-  color: #d1d1e0;
-}
-.btn-favorite.is-favorite,
-.btn-favorite:hover {
-  color: #f5a623;
-}
