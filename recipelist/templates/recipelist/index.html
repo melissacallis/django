@@ -1,17 +1,47 @@
 {% extends 'recipelist/layout.html' %}
 
-{% block title %}Recipe Search{% endblock %}
+{% block title %}OrigoRecipe{% endblock %}
 
 {% block content %}
-  <div class="card p-4">
-    <h1>Search for a Recipe</h1>
-    <p class="text-muted">Search by dish name to pull its ingredients and directions.</p>
-    <form action="{% url 'recipelist:search' %}" method="get">
-      <div class="mb-3">
-        <label for="q" class="form-label">Recipe name</label>
-        <input type="search" class="form-control" id="q" name="q" placeholder="e.g. chicken curry" required>
+  <div class="hero-card p-5 mb-4 text-center">
+    <h1 class="display-6 fw-bold">Find a recipe, build your list</h1>
+    <p class="text-muted mb-4">Search any dish &mdash; ingredients, step-by-step directions, and a grocery list you can send straight to Origo.</p>
+    <form action="{% url 'recipelist:search' %}" method="get" class="row justify-content-center g-2">
+      <div class="col-sm-8 col-md-6">
+        <input type="search" class="form-control form-control-lg" id="q" name="q" placeholder="e.g. kimchi rice, chicken curry, tiramisu" required>
       </div>
-      <button type="submit" class="btn btn-primary">Search</button>
+      <div class="col-sm-3 col-md-2">
+        <button type="submit" class="btn btn-primary btn-lg w-100">Search</button>
+      </div>
     </form>
+    <div class="mt-3">
+      <span class="text-muted small">Try:</span>
+      <a href="{% url 'recipelist:search' %}?q=chicken+curry" class="badge text-bg-light text-decoration-none me-1">chicken curry</a>
+      <a href="{% url 'recipelist:search' %}?q=tacos" class="badge text-bg-light text-decoration-none me-1">tacos</a>
+      <a href="{% url 'recipelist:search' %}?q=ramen" class="badge text-bg-light text-decoration-none me-1">ramen</a>
+      <a href="{% url 'recipelist:search' %}?q=tiramisu" class="badge text-bg-light text-decoration-none me-1">tiramisu</a>
+      <a href="{% url 'recipelist:search' %}?q=kimchi" class="badge text-bg-light text-decoration-none">kimchi</a>
+    </div>
+  </div>
+
+  <div class="row g-4">
+    <div class="col-md-4">
+      <div class="card p-3 h-100">
+        <h5>1. Search</h5>
+        <p class="text-muted mb-0 small">Look up any dish by name and pull real ingredients and directions.</p>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="card p-3 h-100">
+        <h5>2. Save or shop</h5>
+        <p class="text-muted mb-0 small">Star a recipe to keep it in <a href="{% url 'recipelist:favorites' %}">Favorites</a> ({{ favorite_count }} saved), or select ingredients to build a grocery list.</p>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="card p-3 h-100">
+        <h5>3. Send to Origo</h5>
+        <p class="text-muted mb-0 small">Push your grocery list straight to Origo as a task, ready to check off.</p>
+      </div>
+    </div>
   </div>
 {% endblock %}

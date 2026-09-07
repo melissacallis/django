@@ -6,7 +6,22 @@
 
 {% if ingredients %}
   <div class="card p-4 mb-4">
-    <h1>{{ title }}</h1>
+    <div class="d-flex align-items-start justify-content-between">
+      <h1>{{ title }}</h1>
+      <form method="post" action="{% url 'recipelist:add_favorite' %}">
+        {% csrf_token %}
+        <input type="hidden" name="external_id" value="{{ external_id }}">
+        <input type="hidden" name="title" value="{{ title }}">
+        <input type="hidden" name="image" value="{{ image }}">
+        <input type="hidden" name="source_url" value="{{ source_url }}">
+        <input type="hidden" name="ingredients" value='{{ ingredients_json }}'>
+        <input type="hidden" name="directions" value='{{ directions_json }}'>
+        <input type="hidden" name="next" value="{{ request.get_full_path }}">
+        <button type="submit" class="btn-favorite {% if is_favorite %}is-favorite{% endif %}" title="{% if is_favorite %}Saved to favorites{% else %}Add to favorites{% endif %}" {% if is_favorite %}disabled{% endif %}>
+          {% if is_favorite %}&#9733;{% else %}&#9734;{% endif %}
+        </button>
+      </form>
+    </div>
     {% if image %}<img src="{{ image }}" alt="{{ title }}" class="img-fluid rounded mb-3" style="max-width: 320px;">{% endif %}
     {% if source_url %}<p><a href="{{ source_url }}" target="_blank" rel="noopener">Original recipe source</a></p>{% endif %}
 
